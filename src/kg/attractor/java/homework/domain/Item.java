@@ -58,7 +58,8 @@ public class Item {
     //------   Реализация ваших методов должна быть ниже этой линии   ------
     //----------------------------------------------------------------------
 
-    public void printItem(){
-        System.out.printf("Наименование товара: %s; тип: %s; цена %s; количество: %s " + name, type , price, amount);
+    public void printItem() {
+        System.out.printf("Название товара: %s; тип: %s; цена: $%s; количество: %s\n", name, type, price, amount);
     }
 }
+

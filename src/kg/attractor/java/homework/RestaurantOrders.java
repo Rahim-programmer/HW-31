@@ -3,6 +3,7 @@ package kg.attractor.java.homework;
 import com.google.gson.Gson;
 import kg.attractor.java.homework.domain.Order;
 
+import javax.print.attribute.standard.OrientationRequested;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparingDouble;
 import static java.util.stream.Collectors.toList;
 
 public class RestaurantOrders {
@@ -77,4 +79,43 @@ public class RestaurantOrders {
     public int tryParse(String nextLine) {
         return Integer.parseInt(nextLine);
     }
+
+
+    public List<Order> getHomeOrders() {
+        return orders.stream()
+                .filter(Order::isHomeDelivery)
+                .collect(toList());
+    }
+
+    public Order getMaxMinHomeOrders(boolean max) {
+        if (max) {
+            return getHomeOrders().stream()
+                    .max(Comparator.comparingDouble(Order::getTotal))
+                    .get();
+        } else {
+            return getHomeOrders().stream()
+                    .min(Comparator.comparingDouble(Order::getTotal))
+                    .get();
+        }
+    }
+    public List<Order> getOrderBetweenMinAndMaxTotal(double minOrderTotal, double maxOrderTotal){
+        return orders.stream()
+                .sorted(comparingDouble(Order::getTotal))
+                .dropWhile(total -> total.getTotal() < minOrderTotal)
+                .takeWhile(total -> total.getTotal() <= maxOrderTotal)
+                .collect(toList());
+    }
+
+    public double getSumOfAllOrder(){
+        return orders.stream()
+                .mapToDouble(Order::getTotal)
+                .sum();
+    }
 }
+
+
+
+
+
+
+

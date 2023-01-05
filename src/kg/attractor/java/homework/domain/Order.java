@@ -58,10 +58,10 @@ public class Order {
                 .mapToDouble(e -> e.getAmount() * e.getPrice()).sum();
     }
     public void printOrder(){
-        System.out.println("__________________________________________________");
+        System.out.print("\n__________________________________________________\n");
         System.out.println("Покупатель " + customer.getFullName());
         items.forEach(Item::printItem);
-        System.out.printf("Доставка на дом:" , isHomeDelivery() ? "да": "нет");
-        System.out.printf("Общая сумма: %s", total);
+        System.out.printf("Доставка на дом:%s\n" , isHomeDelivery() ? "да": "нет");
+        System.out.print("\nОбщая сумма:" + total);
     }
 }
