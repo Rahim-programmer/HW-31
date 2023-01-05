@@ -1,6 +1,8 @@
 package kg.attractor.java.homework;
 
 import com.google.gson.Gson;
+import kg.attractor.java.homework.domain.Customer;
+import kg.attractor.java.homework.domain.Item;
 import kg.attractor.java.homework.domain.Order;
 
 import javax.print.attribute.standard.OrientationRequested;
@@ -13,7 +15,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparingDouble;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.flatMapping;
 
 public class RestaurantOrders {
     // Этот блок кода менять нельзя! НАЧАЛО!
@@ -60,7 +63,7 @@ public class RestaurantOrders {
         int maxN;
         while (true) {
             try {
-                System.out.println("Введите число N, чтобы получить N количество заказов имеющих самую маленькую стоимость N: ");
+                System.out.println("\nВведите число N, чтобы получить N количество заказов имеющих самую маленькую стоимость N: ");
                 maxN = tryParse(scanner.nextLine());
             } catch (Exception ex) {
                 System.out.println("Введите число:");
@@ -75,6 +78,28 @@ public class RestaurantOrders {
                 .limit(maxN)
                 .collect(toList());
     }
+    public List<Order> getNMinOrders() {
+        Scanner sc = new Scanner(System.in);
+        int minN;
+        while (true) {
+            try {
+                System.out.print("Введите число N, чтобы увидеть N количество заказов имеющих наименьшую общую стоимость. N: ");
+                minN = tryParse(sc.nextLine());
+            } catch (Exception e) {
+                System.out.println("Введите число!");
+                continue;
+            }
+            break;
+
+        }
+        return orders.stream()
+                .sorted(comparingDouble(Order::getTotal))
+                .limit(minN)
+                .collect(toList());
+    }
+
+
+
 
     public int tryParse(String nextLine) {
         return Integer.parseInt(nextLine);
@@ -98,7 +123,8 @@ public class RestaurantOrders {
                     .get();
         }
     }
-    public List<Order> getOrderBetweenMinAndMaxTotal(double minOrderTotal, double maxOrderTotal){
+
+    public List<Order> getOrderBetweenMinAndMaxTotal(double minOrderTotal, double maxOrderTotal) {
         return orders.stream()
                 .sorted(comparingDouble(Order::getTotal))
                 .dropWhile(total -> total.getTotal() < minOrderTotal)
@@ -106,12 +132,54 @@ public class RestaurantOrders {
                 .collect(toList());
     }
 
-    public double getSumOfAllOrder(){
+    public double getSumOfAllOrder() {
         return orders.stream()
                 .mapToDouble(Order::getTotal)
                 .sum();
     }
+
+    public Collection<String> getUnidMails() {
+        return orders.stream()
+                .map(order -> order.getCustomer().getEmail())
+                .collect(toCollection(TreeSet::new));
+    }
+
+
+    public Map<Customer, List<Item>> getUnudCustomer() {
+        return orders.stream()
+                .collect(groupingBy(Order::getCustomer, flatMapping(order -> order.getItems().stream(),
+                        toList())));
+    }
+
+    public Map<Customer, Double> getUnidCostomAndTotalOrder() {
+        return orders.stream()
+                .collect(groupingBy(Order::getCustomer, summingDouble(Order::getTotal)));
+    }
+
+    public Customer getCustomMaxTotalOrders() {
+        return getUnidCostomAndTotalOrder().entrySet().stream().max((expression1, expression2) -> expression1.getValue() > expression2.getValue() ? 1 : -1).get().getKey();
+    }
+
+    public Customer getCustomMinTotalOrders() {
+        return getUnidCostomAndTotalOrder().entrySet().stream().min((expression1, expression2) -> expression1.getValue() > expression2.getValue() ? 1 : -1).get().getKey();
+    }
+
+    public Map<String, Long> getItemContOrder() {
+        return orders.stream()
+                .flatMap(e -> e.getItems().stream())
+                .collect(groupingBy(Item::getName, counting()));
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

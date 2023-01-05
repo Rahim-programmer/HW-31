@@ -62,6 +62,6 @@ public class Order {
         System.out.println("Покупатель " + customer.getFullName());
         items.forEach(Item::printItem);
         System.out.printf("Доставка на дом:%s\n" , isHomeDelivery() ? "да": "нет");
-        System.out.print("\nОбщая сумма:" + total);
+        System.out.print("\nОбщая сумма:" + total +"\n");
     }
 }

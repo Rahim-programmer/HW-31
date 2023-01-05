@@ -42,6 +42,9 @@ public class Customer {
 
     public void buyerInformation(){
         System.out.printf("Клиент %s\n" + fullName);
+        System.out.printf("Email %s\n" + email);
     }
+
+
 
 }
