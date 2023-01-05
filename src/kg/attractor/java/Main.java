@@ -22,12 +22,12 @@ public class Main {
 
         // это для домашки
         // выберите любое количество заказов, какое вам нравится.
-        //var orders = RestaurantOrders.read("orders_1000.json").getOrders();
+//        var restaurant = RestaurantOrders.read("orders_100.json");
         // протестировать ваши методы вы можете как раз в этом файле (или в любом другом, в котором вам будет удобно)
 
 
 //      Данный метод нужен для вывода всего Json файла.
-        var restaurant = RestaurantOrders.read("orders_10_000.json");
+        var restaurant = RestaurantOrders.read("orders_1000.json");
         restaurant.printOrder();
 
 //      Данный метод нужен для вывода количества заказчиков, (Пользователь сам ввод сколько заказчиков он хочет видеть).
