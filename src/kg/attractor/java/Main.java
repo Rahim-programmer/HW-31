@@ -1,7 +1,7 @@
 package kg.attractor.java;
 
-// import static java.util.stream.Collectors.*;
-// import static java.util.Comparator.*;
+ import static java.util.stream.Collectors.*;
+ import static java.util.Comparator.*;
 
 // используя статические imports
 // мы импортируем *всё* из Collectors и Comparator.
@@ -10,17 +10,24 @@ package kg.attractor.java;
 // вот так было до импорта Collectors.toList(), теперь стало просто toList()
 
 
+import kg.attractor.java.homework.RestaurantOrders;
+ import kg.attractor.java.homework.domain.Order;
+ import java.util.MissingFormatArgumentException;
+
 public class Main {
 
     public static void main(String[] args) {
 
         // это для домашки
         // выберите любое количество заказов, какое вам нравится.
-
-        //var orders = RestaurantOrders.read("orders_100.json").getOrders();
+//        var orders = RestaurantOrders.read("orders_10_000.json").getOrders();
         //var orders = RestaurantOrders.read("orders_1000.json").getOrders();
-        //var orders = RestaurantOrders.read("orders_10_000.json").getOrders();
-
         // протестировать ваши методы вы можете как раз в этом файле (или в любом другом, в котором вам будет удобно)
+
+
+        var restaurant = RestaurantOrders.read("orders_100.json");
+
+        var order = restaurant.getOrders();
+        restaurant.printOrder();
     }
 }

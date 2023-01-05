@@ -40,4 +40,8 @@ public class Customer {
     //----------------------------------------------------------------------
 
 
+    public void buyerInformation(){
+        System.out.println("Клиент" + fullName);
+    }
+
 }

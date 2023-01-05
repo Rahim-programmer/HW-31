@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class RestaurantOrders {
     // Этот блок кода менять нельзя! НАЧАЛО!
@@ -39,7 +44,37 @@ public class RestaurantOrders {
 
     // Наполните этот класс решением домашнего задания.
     // Вам необходимо создать все необходимые методы
-    // для решения заданий из домашки :)
+    // для решения заданий из домашки:)
     // вы можете добавлять все необходимые imports
     //
+
+
+    public void printOrder() {
+        orders.forEach(Order::printOrder);
+    }
+
+    public List<Order> getNMaxOrders() {
+        Scanner scanner = new Scanner(System.in);
+        int maxN;
+        while (true) {
+            try {
+                System.out.println("Введите число N, чтобы получить N количество заказов имеющих самую маленькую стоимость N: ");
+                maxN = tryParse(scanner.nextLine());
+            } catch (Exception ex) {
+                System.out.println("Введите число:");
+                continue;
+            }
+            break;
+
+
+        }
+        return orders.stream()
+                .sorted(Comparator.comparingDouble(Order::getTotal).reversed())
+                .limit(maxN)
+                .collect(toList());
+    }
+
+    public int tryParse(String nextLine) {
+        return Integer.parseInt(nextLine);
+    }
 }

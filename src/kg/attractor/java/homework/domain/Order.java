@@ -54,6 +54,14 @@ public class Order {
     //----------------------------------------------------------------------
 
     public void calculateTotal() {
-        throw new NotImplementedException("Вам надо реализовать этот метод!");
+        total = items.stream()
+                .mapToDouble(e -> e.getAmount() * e.getPrice()).sum();
+    }
+    public void printOrder(){
+        System.out.println("__________________________________________________");
+        System.out.println("Покупатель " + customer.getFullName());
+        items.forEach(Item::printItem);
+        System.out.printf("Доставка на дом:" , isHomeDelivery() ? "да": "нет");
+        System.out.printf("Общая сумма: %s", total);
     }
 }
